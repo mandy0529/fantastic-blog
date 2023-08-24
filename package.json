@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "name": "example-monorepo",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "client": "yarn workspace client dev",
+    "server": "yarn workspace server start:dev",
+    "start": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client\""
+  },
+  "dependencies": {
+    "concurrently": "^8.2.1"
+  }
+}
