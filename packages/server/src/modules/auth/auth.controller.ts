@@ -1,3 +1,4 @@
+import { UserService } from './../user/user.service';
 import {
   Controller,
   Get,
@@ -6,16 +7,40 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
+  ClassSerializerInterceptor,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { ApiResponse } from '@nestjs/swagger';
+import { User } from '../user/user.entity';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+  /**
+   * register
+   * @param user
+   */
+  @ApiResponse({ status: 201, description: 'register user', type: [User] })
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Post('register')
+  @HttpCode(HttpStatus.CREATED)
+  register(@Body() user: Partial<User>) {
+    return this.authService.register(user);
+  }
 
-  @Post()
-  create(@Body() CreateAuthDto) {
-    return this.authService.create();
+  /**
+   * login
+   * @param user
+   */
+  @ApiResponse({ status: 200, description: 'login user', type: [User] })
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Post('login')
+  @HttpCode(HttpStatus.CREATED)
+  login(@Body() user: Partial<User>) {
+    return this.authService.login(user);
   }
 
   @Get()
