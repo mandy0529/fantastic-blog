@@ -5,6 +5,10 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // global prefix middleware
+  app.setGlobalPrefix('/api/v1');
+
+  // swagger
   const config = new DocumentBuilder()
     .setTitle('Fantastic-blog')
     .setDescription('The fantastic-blog API description')
