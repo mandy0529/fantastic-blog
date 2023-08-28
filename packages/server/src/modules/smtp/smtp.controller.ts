@@ -18,7 +18,7 @@ export class SmtpController {
   @ApiResponse({ status: 200, description: 'send email', type: [SMTP] })
   @Post()
   @UseGuards(JwtAuthGuard)
-  sendEmail(@Body() data) {
+  sendEmail(@Body() data: Partial<SMTP>) {
     return this.smtpService.sendEmail(data);
   }
 }
