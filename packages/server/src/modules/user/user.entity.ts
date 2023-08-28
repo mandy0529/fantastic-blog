@@ -4,12 +4,22 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  BeforeInsert,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
+import * as bcrypt from 'bcrypt';
 
 @Entity()
 export class User {
+  static comparePassword(writtenPassword, originalPassword) {
+    return bcrypt.compareSync(writtenPassword, originalPassword);
+  }
+
+  static hashPassword(password) {
+    return bcrypt.hashSync(password, 10);
+  }
+
   @PrimaryGeneratedColumn('uuid')
   id: number;
 
@@ -57,4 +67,9 @@ export class User {
     name: 'update_at',
   })
   updateAt: Date;
+
+  @BeforeInsert()
+  hashPassword() {
+    this.password = bcrypt.hashSync(this.password, 10);
+  }
 }
