@@ -1,4 +1,4 @@
-import { UserService } from './../user/user.service';
+import { User } from './../user/user.entity';
 import {
   Controller,
   Get,
@@ -14,7 +14,6 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiResponse } from '@nestjs/swagger';
-import { User } from '../user/user.entity';
 
 @Controller('auth')
 export class AuthController {
@@ -38,7 +37,7 @@ export class AuthController {
   @ApiResponse({ status: 200, description: 'login user', type: [User] })
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('login')
-  @HttpCode(HttpStatus.CREATED)
+  @HttpCode(HttpStatus.OK)
   login(@Body() user: Partial<User>) {
     return this.authService.login(user);
   }
