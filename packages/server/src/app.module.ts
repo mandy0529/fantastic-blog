@@ -5,6 +5,7 @@ import { User } from './modules/user/user.entity';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './modules/auth/auth.module';
 import { SmtpModule } from './modules/smtp/smtp.module';
+import { SMTP } from './modules/smtp/smtp.entity';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { SmtpModule } from './modules/smtp/smtp.module';
       username: process.env.MYSQL_USER,
       password: process.env.MYSQL_PASSWORD,
       database: process.env.MYSQL_DATABASE,
-      entities: [User],
+      entities: [User, SMTP],
       synchronize: true,
     }),
     UserModule,
