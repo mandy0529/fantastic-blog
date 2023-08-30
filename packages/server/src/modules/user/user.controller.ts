@@ -32,23 +32,13 @@ export class UserController {
       { name: 'background', maxCount: 2 },
     ]),
   )
-  uploadFile(
+  async uploadFile(
     @UploadedFiles(new FileValidationPipe())
     files: {
       avatar?: Express.Multer.File[];
       background?: Express.Multer.File[];
     },
   ) {
-    return files;
-  }
-
-  /**
-   * avatar upload
-   * @param user
-   */
-  @Post('file/upload')
-  @UseInterceptors(FileInterceptor('file'))
-  oneuploadFile(@UploadedFile() file: Express.Multer.File) {
-    return this.userService.uploadFile(file);
+    return await this.userService.uploadFiles(files);
   }
 }
