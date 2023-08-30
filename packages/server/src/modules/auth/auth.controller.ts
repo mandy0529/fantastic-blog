@@ -1,12 +1,9 @@
 import { User } from './../user/user.entity';
 import {
   Controller,
-  Get,
   Post,
+  Get,
   Body,
-  Patch,
-  Param,
-  Delete,
   UseInterceptors,
   ClassSerializerInterceptor,
   HttpCode,
@@ -14,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiResponse } from '@nestjs/swagger';
+import { GithubCodeDto } from './dto/Github.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -42,23 +40,14 @@ export class AuthController {
     return this.authService.login(user);
   }
 
-  @Get()
-  findAll() {
-    return this.authService.findAll();
-  }
+  /**
+   * github login
+   * @param user
+   */
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto) {
-    return this.authService.update(+id);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authService.remove(+id);
+  @Post('github-login')
+  @HttpCode(HttpStatus.OK)
+  async loginWithGithub(@Body() githubCodeDto: GithubCodeDto) {
+    return await this.authService.loginWithGithub(githubCodeDto);
   }
 }

@@ -24,8 +24,9 @@ export class SmtpService {
 
     // create new smtp to db
     const newSMTP = await this.smtp.create(data);
+
     await this.smtp.save(newSMTP);
 
-    return { newSMTP };
+    return { msg: 'successfully sent email' };
   }
 }
