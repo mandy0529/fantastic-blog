@@ -1,9 +1,5 @@
-import {
-  PipeTransform,
-  Injectable,
-  ArgumentMetadata,
-  BadRequestException,
-} from '@nestjs/common';
+import { PipeTransform, Injectable, BadRequestException } from '@nestjs/common';
+import { Express } from 'express';
 
 @Injectable()
 export class FileValidationPipe implements PipeTransform {

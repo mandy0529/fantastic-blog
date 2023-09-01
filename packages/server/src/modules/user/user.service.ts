@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { Express } from 'express';
+
 @Injectable()
 export class UserService {
   private readonly s3Client = new S3Client({
